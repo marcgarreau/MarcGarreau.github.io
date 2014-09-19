@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Rails Micro Wins]]></title>
+  <link href="http://railsmicrowins.com/atom.xml" rel="self"/>
+  <link href="http://railsmicrowins.com/"/>
+  <updated>2014-09-12T15:14:41-06:00</updated>
+  <id>http://railsmicrowins.com/</id>
+  <author>
+    <name><![CDATA[Marc Garreau]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Kickoff Soup]]></title>
+    <link href="http://railsmicrowins.com/blog/2014/09/12/kickoff-soup/"/>
+    <updated>2014-09-12T14:10:41-06:00</updated>
+    <id>http://railsmicrowins.com/blog/2014/09/12/kickoff-soup</id>
+    <content type="html"><![CDATA[<p>Coming soon: A step-by-step log of tiny victories in rails.</p>
+
+<p>There will be:</p>
+
+<div class="window">
+              <nav class="control-window">
+                <a href="#" class="close">close</a>
+                <a href="#" class="minimize">minimize</a>
+                <a href="#" class="deactivate">deactivate</a>
+              </nav>
+              <h1 class="titleInside">Terminal</h1>
+              <div class="container">
+                <div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>things happening in the terminal</span></code></pre></td></tr></table></div>
+              </div>
+            </div>
+
+
+<p>and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">EvenMore</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">happening</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;within code snippets!&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay. Now that I finally figured out how to use Octopress, let&rsquo;s do things.</p>
+]]></content>
+  </entry>
+  
+</feed>
