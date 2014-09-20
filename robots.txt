@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://MarcGarreau.github.io/sitemap.xml 
