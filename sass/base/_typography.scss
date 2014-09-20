@@ -24,13 +24,14 @@ $h6:	0.8em !default;
 .mono { font-family: $mono; }
 
 body > header h1 {
-  font-size: .875em !important;
+  font-size: 1.975em !important;
   font-family: $header-title-font-family;
-  font-weight: normal;
-  line-height: .6em;
+  font-weight: bold;
+  line-height: .8em;
+  color: #CC0030;
 }
 body > header h2 {
-  font-size: 5.875em !important;
+  font-size: 1.575em !important;
   font-family: $header-subtitle-font-family;
 }
 
