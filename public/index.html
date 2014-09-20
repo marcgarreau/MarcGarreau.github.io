@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rails Micro Wins</title>
+  <meta name="author" content="Marc Garreau">
+
+  
+  <meta name="description" content="Paperclip allows us to upload, store and display pictures in an application. In this example, we&rsquo;ll go from installation to adding a picture to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://MarcGarreau.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Rails Micro Wins" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Rails Micro Wins</a></h1>
+  
+    <h2>Baby step your way to production.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:MarcGarreau.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/19/using-paperclip/">Using Paperclip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-19T13:47:30-06:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>1:47 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p><a href="https://github.com/thoughtbot/paperclip">Paperclip</a> allows us to upload, store and display pictures in an application. In this example, we&rsquo;ll go from installation to adding a picture to a menu item. You may substitute &lsquo;item&rsquo; for any other model in your application.</p></blockquote>
+
+<ul>
+<li><p>Install imagemagick. It can be a real headache, so there is a dedicated guide here: <a href="#">(Coming soon)</a></p></li>
+<li><p>Add paperclip to your application&rsquo;s Gemfile. At the time of writing, the latest version of paperclip is 4.2.</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;paperclip&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 4.2.0&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Install the gem:</li>
+</ul>
+
+
+<div class="window">
+              <nav class="control-window">
+                <a href="#" class="close">close</a>
+                <a href="#" class="minimize">minimize</a>
+                <a href="#" class="deactivate">deactivate</a>
+              </nav>
+              <h1 class="titleInside">Terminal</h1>
+              <div class="container">
+                <div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>bundle install</span></code></pre></td></tr></table></div>
+              </div>
+            </div>
+
+
+<ul>
+<li>Since we&rsquo;re going to allow a user to add a photo to an item, we need to add the relationship and validation to our item.rb file.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>item.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_attached_file</span> <span class="ss">:image</span><span class="p">,</span> <span class="ss">styles</span><span class="p">:</span> <span class="p">{</span><span class="ss">:medium</span> <span class="o">=&gt;</span> <span class="s2">&quot;300x300&gt;&quot;</span><span class="p">,</span> <span class="ss">:thumb</span> <span class="o">=&gt;</span> <span class="s2">&quot;100x100#&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="n">validates_attachment</span> <span class="ss">:image</span><span class="p">,</span> <span class="ss">content_type</span><span class="p">:</span> <span class="p">{</span><span class="ss">content_type</span><span class="p">:</span> <span class="o">[</span><span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;image/jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;image/png&quot;</span><span class="p">,</span> <span class="s2">&quot;image/gif&quot;</span><span class="o">]</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Paperclip allows us to specify what sizes we&rsquo;d like to save the uploaded image in, so you&rsquo;ll notice above that we&rsquo;ve specified two file sizes with the nicknames of <code>:medium</code> and <code>:thumb</code>. This will make it easy to display those file sizes later.</p>
+
+<p>The trailing <code>#</code> in <code>"100x100#"</code> results in the image being centrally cropped, with those exact dimensions. The trailing    <code>&gt;</code> in <code>"300x300&gt;"</code> modifies the image only if its dimensions are larger than those specified. You can view more imagemagick modifiers <a href="http://www.imagemagick.org/script/command-line-processing.php#geometry">here</a>.</p>
+
+<ul>
+<li>Generate the related migration</li>
+</ul>
+
+
+<div class="window">
+              <nav class="control-window">
+                <a href="#" class="close">close</a>
+                <a href="#" class="minimize">minimize</a>
+                <a href="#" class="deactivate">deactivate</a>
+              </nav>
+              <h1 class="titleInside">Terminal</h1>
+              <div class="container">
+                <div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>rails generate paperclip item image</span></code></pre></td></tr></table></div>
+              </div>
+            </div>
+
+
+<ul>
+<li>Then run the migration</li>
+</ul>
+
+
+<div class="window">
+              <nav class="control-window">
+                <a href="#" class="close">close</a>
+                <a href="#" class="minimize">minimize</a>
+                <a href="#" class="deactivate">deactivate</a>
+              </nav>
+              <h1 class="titleInside">Terminal</h1>
+              <div class="container">
+                <div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>rake db:migrate</span></code></pre></td></tr></table></div>
+              </div>
+            </div>
+
+
+<ul>
+<li>Next, we&rsquo;ll update the form in the edit item view to allow a user to select and upload a photo. Notice the addition of <code>html: {multipart: true}</code> to the head of the form, as well as the new <code>file_field</code> input.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>edit.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sx">%= form_for @user, html: {multipart: true} do |f| %&gt;</span>
+</span><span class='line'><span class="sx"> &lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:image</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx"> &lt;%= f.file_field :image %&gt;</span>
+</span><span class='line'>  <span class="c1"># ...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>In rails 4, the <code>:image</code> will have to be a part of your strong params to get processed, so add that in the items controller.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>items_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">item_params</span>
+</span><span class='line'>  <span class="n">params</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="ss">:item</span><span class="p">)</span><span class="o">.</span><span class="n">permit</span><span class="p">(</span><span class="ss">:image</span><span class="p">,</span> <span class="c1"># ... )</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Now that your image is uploaded, you can display an item&rsquo;s image using an <code>image_tag</code>:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>show.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;%=</span> <span class="n">image_tag</span> <span class="vi">@user</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="ss">:medium</span><span class="p">)</span> <span class="o">%&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&rsquo;s it!</p>
+
+<p>If you&rsquo;d like your shiny new paperclip to work with your application on Heroku, you&rsquo;re going to need to use the aws-sdk gem. You can find that tutorial <a href="" title="#">here, soon.</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/12/kickoff-soup/">Kickoff Soup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-12T14:10:41-06:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>2:10 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Coming soon: A step-by-step log of tiny victories in rails.</p>
+
+<p>There will be:</p>
+
+<div class="window">
+              <nav class="control-window">
+                <a href="#" class="close">close</a>
+                <a href="#" class="minimize">minimize</a>
+                <a href="#" class="deactivate">deactivate</a>
+              </nav>
+              <h1 class="titleInside">Terminal</h1>
+              <div class="container">
+                <div class="terminal"><table><tr><td class='gutter'><pre class='line-numbers'><span class='line-number'>$</span></pre></td><td class='code'><pre><code><span class='line command'>things happening in the terminal</span></code></pre></td></tr></table></div>
+              </div>
+            </div>
+
+
+<p>and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">EvenMore</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">happening</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;within code snippets!&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay. Now that I finally figured out how to use Octopress, let&rsquo;s do things.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/19/using-paperclip/">Using Paperclip</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/12/kickoff-soup/">Kickoff Soup</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/MarcGarreau">@MarcGarreau</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'MarcGarreau',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Marc Garreau -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
