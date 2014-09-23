@@ -58,9 +58,9 @@ def item_params
 end
 ```
 
-* Now that your image is uploaded, you can display an item's image using an `image_tag`:
+* Now that your image is uploaded, you can display an item's image using an `image_tag`. You may specify any of the nicknames you saved earlier to display that image size (i.e. `:thumb` instead of `:medium`).
 ``` ruby show.html.erb
-<%= image_tag @user.image.url(:medium) %>
+<%= image_tag @item.image.url(:medium) %>
 ```
 
 That's it!
